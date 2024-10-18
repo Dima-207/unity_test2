@@ -12,7 +12,7 @@ namespace play_sheme
         private typ_plaer typpla;
         private Animator aan;
         public float sppe;
-
+        private Vector3 nachal_positi;
         public Animator set_antor
         {
             set
@@ -28,6 +28,11 @@ namespace play_sheme
             }
         }
 
+        public void inti_begin_posi()
+        {
+            this.nachal_positi = this.maiin.position;
+        }
+        
         public void do_real_damag()
         {
             if (typpla == typ_plaer.typ_player)
@@ -35,6 +40,7 @@ namespace play_sheme
             if (typpla == typ_plaer.ryp_enemy)
                 help_3.heal_playe.set_damag(help_3.udar_enemy.val_damag);
             this.hellp_1.ma_do_hit = do_mod_hit.do_return;
+            this.aan.SetBool("stay",false);
         }
         public void do_coommand_run_hit()
         {
@@ -44,6 +50,21 @@ namespace play_sheme
             if ((this.maiin.position - enemm.position).sqrMagnitude < 2)
             {
                 this.hellp_1.ma_do_hit=do_mod_hit.do_hit;
+                this.aan.SetBool("stay",true);
+            }
+            //Debug.Log("transform.position="+this.maiin.position);
+        }
+        public void do_coommand_simp_return()
+        {
+            if(this.hellp_1.ma_do_hit!=do_mod_hit.do_return)
+                return;
+            
+            
+            this.maiin.position = Vector3.MoveTowards(this.maiin.position, nachal_positi, this.sppe* Time.deltaTime);
+            if ((this.maiin.position - nachal_positi).sqrMagnitude < 2)
+            {
+                this.hellp_1.ma_do_hit = do_mod_hit.do_off;
+                this.hellp_1.ma_res = mode_main.mode_init;
                 this.aan.SetBool("stay",true);
             }
             //Debug.Log("transform.position="+this.maiin.position);
@@ -67,6 +88,7 @@ namespace play_sheme
             //Debug.Log("do start hit "+this.hellp_1.ma_do_hit.ToString());
             this.do_coommand_run_hit();
             this.do_coommand_simp_hit();
+            this.do_coommand_simp_return();
             
         }
         public help_2(help_1 hehe)

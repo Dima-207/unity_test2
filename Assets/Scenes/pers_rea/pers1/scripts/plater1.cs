@@ -57,6 +57,7 @@ namespace play_sheme
             this.hellp_2.set_antor = this.anim_;
             this.hellp_2.set_tipl = typpla;
             this.hellp_2.maiin = transform;
+            this.hellp_2.inti_begin_posi();
             if(typpla==typ_plaer.typ_player)
             {
                 this.hellp_3.set_healths(200, this.he_sca_player,heat_playe_tex,
@@ -66,6 +67,18 @@ namespace play_sheme
             }
         }
 
+        public void have_damag_ini(int val)
+        {
+            this.anim_.SetBool("stay",true);
+            this.anim_.SetTrigger("upal");
+            Debug.Log("pla " + typpla.ToString() + " upal");
+        }
+        public void do_damag_ene_udar(int val)
+        {
+            plater1 olaene=this.enemm.GetComponent<plater1>();
+            this.do_real_damag_hit();
+            olaene.have_damag_ini(val);
+        }
         void check_init()
         {
             if (this.hellp_1.use_1_anim)
