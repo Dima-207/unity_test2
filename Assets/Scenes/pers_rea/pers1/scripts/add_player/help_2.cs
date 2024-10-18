@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,9 +37,11 @@ namespace play_sheme
         public void do_real_damag()
         {
             if (typpla == typ_plaer.typ_player)
-                help_3.heal_enemy.set_damag(help_3.udar_playe.val_damag);
+                help_3.heal_enemy.set_damag(help_3.udar_playe.val_damag-
+                                            help_3.enemy_sten.get_defense);
             if (typpla == typ_plaer.ryp_enemy)
-                help_3.heal_playe.set_damag(help_3.udar_enemy.val_damag);
+                help_3.heal_playe.set_damag(help_3.udar_enemy.val_damag-
+                                            help_3.player_sten.get_defense);
             this.hellp_1.ma_do_hit = do_mod_hit.do_return;
             this.aan.SetBool("stay",false);
         }
@@ -61,10 +64,11 @@ namespace play_sheme
             
             
             this.maiin.position = Vector3.MoveTowards(this.maiin.position, nachal_positi, this.sppe* Time.deltaTime);
-            if ((this.maiin.position - nachal_positi).sqrMagnitude < 2)
+            if ((this.maiin.position - nachal_positi).sqrMagnitude < 0.2f)
             {
                 this.hellp_1.ma_do_hit = do_mod_hit.do_off;
                 this.hellp_1.ma_res = mode_main.mode_init;
+                help_3.all_decrease();
                 this.aan.SetBool("stay",true);
             }
             //Debug.Log("transform.position="+this.maiin.position);
@@ -106,7 +110,7 @@ namespace play_sheme
             if(this.hellp_1.ma_res!=mode_main.mode_init)
                 return;
             this.hellp_1.ma_res = mode_main.mode_wait;
-            if (typpla == typ_plaer.ryp_enemy)
+            if (typpla == typ_plaer.ryp_enemy&&new System.Random().Next(0,100)<25)
             {
                 this.set_comand_hit();
             }

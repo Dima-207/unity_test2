@@ -10,6 +10,10 @@ namespace play_sheme
         {
             this.pla.do_damag_ene_udar(help_3.udar_playe.val_damag);
         }
+        public void buld_end()
+        {
+            this.pla.after_built();
+        }
     }
 }
 

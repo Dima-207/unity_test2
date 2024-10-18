@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TreeEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -12,6 +13,7 @@ namespace play_sheme
         private help_1 hellp_1;
         private help_2 hellp_2;
         private help_3 hellp_3;
+        private help_sten hellp_stte;
         public Animator anim_;
         public typ_plaer typpla;
         public Transform enemm;
@@ -22,11 +24,21 @@ namespace play_sheme
         public Transform he_sca_enemy;
         public Text heat_enemy_tex;
         public float speed_pla = 7.2f;
+        public Text build_playe_tex;
+        public Text build_enemy_tex;
+        public GameObject sten_plal;
+        public GameObject sten_enem;
         public plater1()
         {
             this.hellp_1 = new help_1(this.anim_);
             this.hellp_2 = new help_2(this.hellp_1);
             this.hellp_3 = new help_3();
+            this.hellp_stte = new help_sten(this.hellp_1);
+        }
+
+        public void after_built()
+        {
+            this.hellp_stte.do_cooman_after_built();
         }
         public void do_real_damag_hit()
         {
@@ -35,6 +47,28 @@ namespace play_sheme
         public void do_coom_hit()
         {
             this.hellp_2.set_comand_hit();
+            
+        }
+
+        public void chhe_robo()
+        {
+            if (typpla != typ_plaer.ryp_enemy)
+            {
+                return;
+            }
+            if (new System.Random().Next(0, 100) < 25)
+            {
+                this.hellp_stte.set_comand_built(); 
+            }
+            if (new System.Random().Next(0, 100) < 25)
+                {
+                    this.hellp_2.set_comand_hit(); 
+                }
+            
+        }
+        public void do_coom_bilt()
+        {
+            this.hellp_stte.set_comand_built();
         }
         public mode_main get_mode_main
         {
@@ -47,19 +81,32 @@ namespace play_sheme
         {
             this.hellp_2.set_wait();
         }
+        public void set_wait_sten()
+        {
+            this.hellp_stte.set_wait();
+        }
 
 
         void Start()
         {
             this.hellp_2.sppe = this.speed_pla;
+            this.hellp_stte.sppe=this.speed_pla;
             this.hellp_1.set_param(anim_);
             this.hellp_2.set_param(enemm);
+            this.hellp_stte.set_param(enemm);
             this.hellp_2.set_antor = this.anim_;
+            this.hellp_stte.set_antor = this.anim_;
             this.hellp_2.set_tipl = typpla;
+            this.hellp_stte.set_tipl = typpla;
             this.hellp_2.maiin = transform;
+            this.hellp_stte.maiin = transform;
             this.hellp_2.inti_begin_posi();
+            this.hellp_stte.inti_begin_posi();
+            this.hellp_stte.scan_coor_main();
             if(typpla==typ_plaer.typ_player)
             {
+                this.hellp_3.buid_sten(this.build_playe_tex,this.sten_plal,
+                    this.build_enemy_tex,this.sten_enem);
                 this.hellp_3.set_healths(200, this.he_sca_player,heat_playe_tex,
                     200, this.he_sca_enemy,heat_enemy_tex);
                 this.hellp_3.set_init_udar(8, this.tex_player,
@@ -71,7 +118,7 @@ namespace play_sheme
         {
             this.anim_.SetBool("stay",true);
             this.anim_.SetTrigger("upal");
-            Debug.Log("pla " + typpla.ToString() + " upal");
+            //Debug.Log("pla " + typpla.ToString() + " upal");
         }
         public void do_damag_ene_udar(int val)
         {
@@ -79,14 +126,18 @@ namespace play_sheme
             this.do_real_damag_hit();
             olaene.have_damag_ini(val);
         }
+
+        
         void check_init()
         {
             if (this.hellp_1.use_1_anim)
             {
+                
                 this.anim_.SetTrigger("smeh");
             }
             if (this.hellp_1.use_2_anim)
             {
+                
                 this.anim_.SetTrigger("muha");
             }
         }
@@ -94,7 +145,9 @@ namespace play_sheme
         {
             this.hellp_1.do_anim_pokoi();
             this.check_init();
+            this.chhe_robo();
             this.hellp_2.do_command_hit();
+            this.hellp_stte.do_command_bild();
         }
     }
 }

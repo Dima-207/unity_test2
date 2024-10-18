@@ -6,6 +6,15 @@ using UnityEngine;
 
 namespace play_sheme
 {
+    public enum do_build_wall
+    {
+        its_off=0,
+        ts_begiin=1,
+        ts_run=2,
+        do_bild=3,
+        do_after_bild=4,
+        ts_return=5
+    }
     public enum do_mod_hit
     {
         do_off=0,
@@ -35,7 +44,7 @@ namespace play_sheme
         private bool do_anim;
         private bool do_anim_2;
         private int healt;
-
+        public do_build_wall ma_build { get; set; }
         public int heal_now
         {
             set
@@ -73,6 +82,7 @@ namespace play_sheme
             this.its_rand_pokoi = false;
             this.ma_res = mode_main.mode_init;
             this.ma_do_hit = do_mod_hit.do_off;
+            this.ma_build = do_build_wall.its_off;
             this.do_anim = false;
             this.do_anim_2 = false;
             this.healt = 100;
