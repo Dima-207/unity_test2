@@ -181,6 +181,10 @@ namespace play_sheme
             {
                 this.hellp_table.set_comand_lecar(); 
             }
+            if (new System.Random().Next(0, 100) < 25)
+            {
+                this.hellp_ogon.set_comand_hit(); 
+            }
             
         }
         public void do_coom_lekar()

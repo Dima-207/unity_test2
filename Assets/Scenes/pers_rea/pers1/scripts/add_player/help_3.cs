@@ -132,6 +132,7 @@ namespace play_sheme
             set
             {
                 this.teex_ogon = value;
+                this.teex_ogon.color=Color.black;
                 set_tex = true;
             }
         }
@@ -261,6 +262,7 @@ namespace play_sheme
             set
             {
                 this.teex_dfen = value;
+                this.teex_dfen.color=Color.black;
                 set_tex = true;
             }
         }
@@ -342,6 +344,7 @@ namespace play_sheme
             set
             {
                 this.teex_dfen = value;
+                this.teex_dfen.color=Color.black;
                 set_tex = true;
             }
         }
@@ -463,6 +466,7 @@ namespace play_sheme
             set
             {
                 this.inf_healt = value;
+                //this.inf_healt.color=Color.black;
                 this.inf_healt.text = "Здоровье:" + this.cur_val.ToString();
             }
         }
