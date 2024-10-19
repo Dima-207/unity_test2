@@ -18,6 +18,10 @@ namespace play_sheme
         {
             this.pla.after_lecar();
         }
+        public void ogon_end()
+        {
+            this.pla.after_boi_ogon();
+        }
     }
 }
 

@@ -6,6 +6,18 @@ using UnityEngine;
 
 namespace play_sheme
 {
+    public enum do_ogon_boi
+    {
+        its_off=0,
+        ts_begiin=1,
+        ts_run=2,
+        do_boi=3,
+        do_after_boi=4,
+        do_vverh_ogon=5,
+        do_aim_ogon=6,
+        do_end_aim_ogon=7,
+        ts_return=8
+    }
     public enum do_lekar_repai
     {
         its_off=0,
@@ -53,6 +65,7 @@ namespace play_sheme
         private bool do_anim;
         private bool do_anim_2;
         private int healt;
+        public do_ogon_boi ma_boi_ogon {get; set;}
         public do_build_wall ma_build { get; set; }
         public do_lekar_repai ma_rekar {get; set;}
         public int heal_now
