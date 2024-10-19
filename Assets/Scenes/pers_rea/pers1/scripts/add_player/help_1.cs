@@ -6,6 +6,15 @@ using UnityEngine;
 
 namespace play_sheme
 {
+    public enum do_lekar_repai
+    {
+        its_off=0,
+        ts_begiin=1,
+        ts_run=2,
+        do_lekar=3,
+        do_after_lekar=4,
+        ts_return=5
+    }
     public enum do_build_wall
     {
         its_off=0,
@@ -45,6 +54,7 @@ namespace play_sheme
         private bool do_anim_2;
         private int healt;
         public do_build_wall ma_build { get; set; }
+        public do_lekar_repai ma_rekar {get; set;}
         public int heal_now
         {
             set

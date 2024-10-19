@@ -13,19 +13,41 @@ namespace cam_obrab
         private Vector3 vec_its;
         private bool rehect;
         private float ditancee = 11;
-        public float sperot = 2;
+        public float sperot = 7;
         private Vector3 vve;
         void Start()
         {
 
         }
 
+        Vector3 get_better()
+        {
+            Vector3 vbn = (enem.position - playe.position)/3;
+            vbn = playe.position - vbn;
+            vbn += new Vector3(Random.Range(1.2f, 6.4f), Random.Range(2.2f, 3.4f), Random.Range(2.2f, 6.4f));
+            return vbn;
+        }
         IEnumerator besca()
         {
+            int rebb = new System.Random().Next(0, 30);
             this.vve = this.get_ve();
             this.vve.y = vve.y + Random.Range(1.3f, 4.9f);
-            this.vve.z += Random.Range(-33.2f, 33.3f);
-            this.vve.x += Random.Range(-33.2f, 33.3f);
+            if(rebb<14)
+            {
+                this.vve.z += Random.Range(-33.2f, 33.3f);
+                this.vve.x += Random.Range(-33.2f, 33.3f);
+            }
+            else
+            {
+                if (rebb < 74)
+                    this.vve = get_better();
+                else
+                {
+                    this.vve.z += Random.Range(-6.2f, 6.3f);
+                    this.vve.x += Random.Range(-6.2f, 6.3f);
+                }
+                
+            }
             this.rehect = true;
             yield return new WaitForSeconds(Random.Range(11.3f, 21.9f));
             
@@ -51,7 +73,7 @@ namespace cam_obrab
             Vector3 vv = playe.position;
             Vector3 caal = playe.position - enem.position;
             caal /= 5;
-            vv += caal;
+            vv -= caal;
             return vv;
         }
         // Update is called once per frame

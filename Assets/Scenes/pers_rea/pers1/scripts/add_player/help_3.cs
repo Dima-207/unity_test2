@@ -14,9 +14,13 @@ namespace play_sheme
         static public health heal_enemy;
         static public buld_sten player_sten;
         static public buld_sten enemy_sten;
+        static public lekar_lech player_tablet;
+        static public lekar_lech enemy_tablet;
 
         public help_3()
         {
+            player_tablet = new lekar_lech(2, 4, 6);
+            enemy_tablet = new lekar_lech(2, 4, 6);
             player_sten = new buld_sten(5, 3, 5);
             enemy_sten = new buld_sten(5, 3, 5);
             udar_playe = new haract_ob(5,0);
@@ -24,13 +28,21 @@ namespace play_sheme
             heal_playe = new health();
             heal_enemy = new health();
         }
-
+        public void buid_lekar(Text tex_pla,Text tex_enem)
+        {
+            player_tablet.ini_text_draw = tex_pla;
+            enemy_tablet.ini_text_draw = tex_enem;
+        }
         public static void all_decrease()
         {
             try
             {
                 player_sten.decrease();
                 enemy_sten.decrease();
+                heal_playe.set_prib(player_tablet.get_lekar_repair);
+                player_tablet.decrease();
+                heal_enemy.set_prib(enemy_tablet.get_lekar_repair);
+                enemy_tablet.decrease();
             }
             catch (Exception e)
             {
@@ -66,6 +78,82 @@ namespace play_sheme
             udar_enemy.set_tex = tex_enem;
         }
     } 
+    public struct lekar_lech
+    {
+        private Text teex_dfen;
+        
+        private int hod_remain { get; set; }
+        private int max_hod_remain;
+        private int val_save_h { get; set; }
+        private int recover_wait { get; set; }
+        private int max_rec_wait;
+
+        public Text ini_text_draw
+        {
+            set
+            {
+                this.teex_dfen = value;
+                set_tex = true;
+            }
+        }
+        
+        private bool set_tex
+        {
+            set
+            {
+                string outuj = $"лек:{val_save_h}|действ:{hod_remain}|;ждать{recover_wait}";
+                try
+                {
+                    this.teex_dfen.text = outuj;
+                    
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e.Message+" lekar error");
+                }
+            }
+        }
+
+        public int get_lekar_repair
+        {
+            get
+            {
+                int vaal = this.val_save_h;
+                if (this.hod_remain < 1)
+                    return 0;
+                this.set_tex=true;
+                return vaal;
+            }
+        }
+        public lekar_lech(int save_he,int hood,int max_wait)
+        {
+            this.val_save_h = save_he;
+            this.hod_remain = 0;
+            this.max_hod_remain = hood;
+            this.max_rec_wait = max_wait;
+            this.recover_wait = 0;
+            this.teex_dfen = null;
+            this.set_tex=true;
+        }
+
+        public void birth_new()
+        {
+            if(this.recover_wait>0)
+                return;
+            this.hod_remain = this.max_hod_remain;
+            this.recover_wait = this.max_rec_wait;
+            this.set_tex=true;
+        }
+        public void decrease(int val = 1)
+        {
+            this.hod_remain -= val;
+            this.hod_remain = this.hod_remain < 0 ? 0 : this.hod_remain;
+            this.recover_wait -= val;
+            this.recover_wait = this.recover_wait < 0 ? 0 : this.recover_wait;
+            this.set_tex=true;
+        }
+            
+    }
     public struct buld_sten
     {
         private Text teex_dfen;
@@ -109,7 +197,7 @@ namespace play_sheme
                 }
                 catch (Exception e)
                 {
-                    Debug.Log(e.Message);
+                   // Debug.Log(e.Message);
                 }
             }
         }
@@ -169,6 +257,16 @@ namespace play_sheme
         private Transform hel_ob_rot;
         private Text inf_healt;
 
+        public void set_prib(int vva)
+        {
+            this.cur_val += vva;
+            this.cur_val = this.cur_val > this.max_val ? this.max_val : this.cur_val;
+            this.inf_healt.text = "Здоровье:" + this.cur_val.ToString()+"|+"+vva.ToString();
+            float znach=((float)this.cur_val)/this.max_val;
+            razz = this.hel_ob_rot.localScale;
+            razz.y= znach;
+            this.hel_ob_rot.localScale = razz;
+        }
         public void set_damag(int vva)
         {
             this.cur_val -= vva;
@@ -177,9 +275,9 @@ namespace play_sheme
                 this.cur_val += val_defense;
             }
             this.inf_healt.text = "Здоровье:" + this.cur_val.ToString();
-            float znach=this.cur_val/this.max_val;
+            float znach=((float)this.cur_val)/this.max_val;
             razz = this.hel_ob_rot.localScale;
-            razz.z = znach;
+            razz.y= znach;
             this.hel_ob_rot.localScale = razz;
         }
 

@@ -14,6 +14,10 @@ namespace play_sheme
         {
             this.pla.after_built();
         }
+        public void lekar_end()
+        {
+            this.pla.after_lecar();
+        }
     }
 }
 

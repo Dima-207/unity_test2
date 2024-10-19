@@ -14,6 +14,7 @@ namespace play_sheme
         private help_2 hellp_2;
         private help_3 hellp_3;
         private help_sten hellp_stte;
+        private tablet hellp_table;
         public Animator anim_;
         public typ_plaer typpla;
         public Transform enemm;
@@ -28,14 +29,21 @@ namespace play_sheme
         public Text build_enemy_tex;
         public GameObject sten_plal;
         public GameObject sten_enem;
+        public Text lekar_playe_tex;
+        public Text lekar_enemy_tex;
         public plater1()
         {
             this.hellp_1 = new help_1(this.anim_);
             this.hellp_2 = new help_2(this.hellp_1);
             this.hellp_3 = new help_3();
             this.hellp_stte = new help_sten(this.hellp_1);
+            this.hellp_table = new tablet(this.hellp_1);
         }
 
+        public void after_lecar()
+        {
+            this.hellp_table.do_cooman_after_lekar();
+        }
         public void after_built()
         {
             this.hellp_stte.do_cooman_after_built();
@@ -64,7 +72,15 @@ namespace play_sheme
                 {
                     this.hellp_2.set_comand_hit(); 
                 }
+            if (new System.Random().Next(0, 100) < 25)
+            {
+                this.hellp_table.set_comand_lecar(); 
+            }
             
+        }
+        public void do_coom_lekar()
+        {
+            this.hellp_table.set_comand_lecar();
         }
         public void do_coom_bilt()
         {
@@ -90,21 +106,30 @@ namespace play_sheme
         void Start()
         {
             this.hellp_2.sppe = this.speed_pla;
+            this.hellp_table.sppe=this.speed_pla;
             this.hellp_stte.sppe=this.speed_pla;
             this.hellp_1.set_param(anim_);
             this.hellp_2.set_param(enemm);
             this.hellp_stte.set_param(enemm);
+            this.hellp_table.set_param(enemm);
             this.hellp_2.set_antor = this.anim_;
             this.hellp_stte.set_antor = this.anim_;
+            this.hellp_table.set_antor = this.anim_;
             this.hellp_2.set_tipl = typpla;
             this.hellp_stte.set_tipl = typpla;
+            this.hellp_table.set_tipl = typpla;
             this.hellp_2.maiin = transform;
+            this.hellp_table.maiin = transform;
             this.hellp_stte.maiin = transform;
             this.hellp_2.inti_begin_posi();
             this.hellp_stte.inti_begin_posi();
+            this.hellp_table.inti_begin_posi();
             this.hellp_stte.scan_coor_main();
+            this.hellp_table.scan_coor_lekar();
             if(typpla==typ_plaer.typ_player)
             {
+                this.hellp_3.buid_lekar(this.lekar_playe_tex,
+                    this.lekar_enemy_tex);
                 this.hellp_3.buid_sten(this.build_playe_tex,this.sten_plal,
                     this.build_enemy_tex,this.sten_enem);
                 this.hellp_3.set_healths(200, this.he_sca_player,heat_playe_tex,
@@ -148,6 +173,7 @@ namespace play_sheme
             this.chhe_robo();
             this.hellp_2.do_command_hit();
             this.hellp_stte.do_command_bild();
+            this.hellp_table.do_command_lekar();
         }
     }
 }
