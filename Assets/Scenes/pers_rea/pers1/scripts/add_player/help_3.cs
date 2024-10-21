@@ -279,7 +279,7 @@ namespace play_sheme
                 }
                 catch (Exception e)
                 {
-                    Debug.Log(e.Message+" lekar error");
+                    //Debug.Log(e.Message+" lekar error");
                 }
             }
         }

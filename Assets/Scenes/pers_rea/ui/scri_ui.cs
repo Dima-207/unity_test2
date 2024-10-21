@@ -8,6 +8,9 @@ namespace spac_ui
 {
     public class scri_ui : MonoBehaviour
     {
+        public AudioClip clip_muz;
+        private AudioSource sour;
+        private bool igramuz;
         public void load_scene(int n)
         {
             try
@@ -18,6 +21,26 @@ namespace spac_ui
             {
                 Debug.Log(e.Message);
             }
+        }
+
+        public void muuz()
+        {
+            this.igramuz = !this.igramuz;
+            if (igramuz)
+            {
+                this.sour.Play();
+            }
+            else
+            {
+                this.sour.Stop();
+            }
+        }
+        private void Start()
+        {
+            this.igramuz = false;
+            this.sour = GetComponent<AudioSource>();
+            this.sour.clip = clip_muz;
+            this.sour.Stop();
         }
     }
 }
